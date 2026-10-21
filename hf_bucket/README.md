@@ -59,7 +59,7 @@ I built 4 pairs. Each pair is **one spelling**, two meanings (ጠብቆ / stress
 Steps:
 1. Generate TTS for all 8 sentences (first pass).
 2. Listen as a native speaker and label each clip as **stressed** or **relaxed**.
-3. Regenerate each sentence **5 times** (40 clips) to check if the failure is stable or random.
+3. Regenerate each sentence **5 times** (40 clips) to check if the failure is stable or random. Each of the 5 clips per sentence is a **separate model generation** (a different audio file), not a copy of the same file. I did this so the result does not depend on a single run.
 4. Record my own human reference audio for all 8 sentences (so you can hear the contrast the model misses).
 
 Full sentences and labels are in `results/`.
@@ -68,7 +68,7 @@ Full sentences and labels are in `results/`.
 
 **First pass:** in all 4 pairs, both context sentences got the **same** pronunciation (0/4 switched).
 
-**5× regeneration:** every sentence stayed the same across all 5 runs (40/40 stable). Still, in all 4 pairs, both sentences kept that same pronunciation (0/4 switched).
+**5× regeneration:** every sentence stayed the same across all 5 **separate** generations (40/40 stable). Still, in all 4 pairs, both sentences kept that same pronunciation (0/4 switched).
 
 What I heard:
 - ዋና and ሰፊ → always **stressed** (ጠብቆ), in both contexts and all repeats
