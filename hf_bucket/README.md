@@ -20,17 +20,21 @@ size_categories:
 
 ## What I noticed (Question 1)
 
-In Amharic, some words are written **exactly the same** but mean different things depending on how you say them: one reading is **stressed** (held / taut consonant), the other is **relaxed**.
+As an Amharic speaker, I keep noticing words that are written **exactly the same** but mean different things depending on how people say them. In school we called this **ጠብቆ** (stressed / held) vs **ላልቶ** (relaxed). Linguists call the held form **gemination**: the consonant is held longer. The writing does **not** show it.
 
-This is **not** like pairs that look different on the page (for example አለ vs አለለ). Those have different letters. My pairs do not. The text is identical; only the spoken form changes with meaning.
+A clear everyday example is **አለ**:
+- አለ said **ላልቶ** (relaxed) → “he said”
+- አለ said **ጠብቆ** (stressed / held) → “there is / exists”
 
-So a TTS model cannot “see” the answer in the spelling. It has to use the **sentence meaning** to pick stressed vs relaxed.
+Same letters. Different meaning. Only speech carries the difference.
+
+I have heard TTS systems sound fluent in Amharic but still miss this. They read the letters and pick one default sound. That is the blind spot I tested: **sounds that change the meaning of a word**, while the writing stays the same.
+
+So a TTS model cannot “see” the answer in the spelling. It has to use the **sentence meaning** to pick ጠብቆ vs ላልቶ.
 
 Benchmarks usually check if speech sounds clear. They rarely check this: same letters, two meanings — does the model switch the pronunciation?
 
-That is the blind spot I tested: **sounds that change the meaning of a word**, while the writing stays the same.
-
-(Linguists often call the stressed form gemination. I label clips **stressed** vs **relaxed** so it is clear we mean pronunciation, not adding letters.)
+In this repo I label clips **stressed** (ጠብቆ) and **relaxed** (ላልቶ). File names use those English words so folders stay easy to sort. They do **not** mean extra letters on the page.
 
 ## Model
 
@@ -43,10 +47,10 @@ Why this model:
 
 ## What I did
 
-I built 4 pairs. Each pair is **one spelling**, two meanings (stressed vs relaxed). For each meaning I wrote a short context sentence.
+I built 4 pairs. Each pair is **one spelling**, two meanings (ጠብቆ / stressed vs ላልቶ / relaxed). For each meaning I wrote a short context sentence myself.
 
-| Same spelling | Stressed meaning | Relaxed meaning |
-|---------------|------------------|-----------------|
+| Same spelling | Stressed (ጠብቆ) meaning | Relaxed (ላልቶ) meaning |
+|---------------|--------------------------|-------------------------|
 | ዋና | key / important | swim |
 | ሰፊ | wide | tailor's shop |
 | ገና | gena (Christmas game) | yet / still |
@@ -62,34 +66,45 @@ Full sentences and labels are in `results/`.
 
 ## Results
 
-**First pass:** the model did not switch for any pair (0/4).
+**First pass:** in all 4 pairs, both context sentences got the **same** pronunciation (0/4 switched).
 
-**5× regeneration:** every sentence stayed the same across all 5 runs (40/40 stable). Still no pair switched by context (0/4).
+**5× regeneration:** every sentence stayed the same across all 5 runs (40/40 stable). Still, in all 4 pairs, both sentences kept that same pronunciation (0/4 switched).
 
-What the model defaulted to:
-- ዋና and ሰፊ → always **stressed**
-- ገና and አያት → always **relaxed**
+What I heard:
+- ዋና and ሰፊ → always **stressed** (ጠብቆ), in both contexts and all repeats
+- ገና and አያት → always **relaxed** (ላልቶ), in both contexts and all repeats
 
-So the model picks one pronunciation per spelling and sticks to it. It does not use sentence meaning to choose stressed vs relaxed.
+So in this pilot, the model did not use sentence meaning to choose ጠብቆ vs ላልቶ for these same-spelling pairs.
 
 ## Limits (this is a pilot)
 
 - Only 4 pairs
 - One listener (me)
+- Listening was **not blind** — I knew which sentence was which when I labeled
+- I wrote the context sentences myself
 - Labels from listening, not yet measured consonant duration
 - One model
+
+## How to reproduce
+
+- Google Colab
+- Model: `Lab-et/omnivoice-amharic` via the OmniVoice package
+- Language: Amharic
+- Settings used: `num_step=32`, `guidance_scale=2.0`
+- Generate each of the 8 sentences once, then regenerate each sentence 5 times
+- Compare against the human recordings in `audio/human_recordings/`
 
 ## Path forward (Question 3)
 
 To fix this, we need training data that makes the choice explicit:
 - same spelling (identical text)
 - two meanings
-- two gold audios (stressed vs relaxed)
+- two gold audios (ጠብቆ / stressed vs ላልቶ / relaxed)
 - clear context sentences for each
 
-Then fine-tune the TTS so it must pick the right spoken form from context — not one default per spelling.
+Then fine-tune the TTS so it must pick the right spoken form from context — not one default for both sentences of a pair.
 
-A stronger option later: give the model an explicit control for this contrast (stress / hold length).
+A stronger option later: give the model an explicit control for this contrast (hold length / ጠብቆ).
 
 ## What’s in this bucket
 
