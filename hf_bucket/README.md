@@ -1,3 +1,21 @@
+---
+pretty_name: Amharic TTS Same-Spelling Stress Blindspot
+license: cc-by-4.0
+language:
+- am
+- en
+task_categories:
+- text-to-speech
+tags:
+- audio
+- amharic
+- tts
+- speech
+- pronunciation
+size_categories:
+- n<1K
+---
+
 # Amharic same-spelling stress: a blind spot in open TTS
 
 ## What I noticed (Question 1)
