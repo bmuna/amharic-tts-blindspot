@@ -1,5 +1,5 @@
 ---
-pretty_name: Amharic TTS Same-Spelling Stress Blindspot
+pretty_name: Amharic TTS Same-Spelling Gemination Blindspot
 license: cc-by-4.0
 language:
 - am
@@ -12,29 +12,32 @@ tags:
 - tts
 - speech
 - pronunciation
+- gemination
 size_categories:
 - n<1K
 ---
 
-# Amharic same-spelling stress: a blind spot in open TTS
+# Amharic same-spelling gemination: a blind spot in open TTS
 
 ## What I noticed (Question 1)
 
-As an Amharic speaker, I keep noticing words that are written **exactly the same** but mean different things depending on how people say them. In school we called this **ጠብቆ** (stressed / held) vs **ላልቶ** (relaxed). Linguists call the held form **gemination**: the consonant is held longer. The writing does **not** show it.
+As an Amharic speaker, I keep noticing words that are written **exactly the same** but mean different things depending on how people say them. In school we called this **ጠብቆ** vs **ላልቶ**. In linguistics this is **gemination** vs **non-gemination**: the consonant is held longer, or it is not. The writing does **not** show it.
+
+**Note on labels:** in this README and in file names, **“stressed” means gemination** (a held / doubled consonant = ጠብቆ). **“Relaxed” means non-gemination** (ላልቶ). This is **not** English syllable stress (louder syllable).
 
 A clear everyday example is **አለ**:
-- አለ said **ላልቶ** (relaxed) → “he said”
-- አለ said **ጠብቆ** (stressed / held) → “there is / exists”
+- አለ said **ላልቶ** (relaxed / non-gemination) → “he said”
+- አለ said **ጠብቆ** (stressed / gemination) → “there is / exists”
 
 Same letters. Different meaning. Only speech carries the difference.
 
 I have heard TTS systems sound fluent in Amharic but still miss this. They read the letters and pick one default sound. That is the blind spot I tested: **sounds that change the meaning of a word**, while the writing stays the same.
 
-So a TTS model cannot “see” the answer in the spelling. It has to use the **sentence meaning** to pick ጠብቆ vs ላልቶ.
+So a TTS model cannot “see” the answer in the spelling. It has to use the **sentence meaning** to pick gemination vs non-gemination (ጠብቆ vs ላልቶ).
 
 Benchmarks usually check if speech sounds clear. They rarely check this: same letters, two meanings — does the model switch the pronunciation?
 
-In this repo I label clips **stressed** (ጠብቆ) and **relaxed** (ላልቶ). File names use those English words so folders stay easy to sort. They do **not** mean extra letters on the page.
+File names use `stressed` / `relaxed` so folders stay easy to sort. They mean gemination / non-gemination, **not** extra letters on the page.
 
 ## Model
 
@@ -47,10 +50,10 @@ Why this model:
 
 ## What I did
 
-I built 4 pairs. Each pair is **one spelling**, two meanings (ጠብቆ / stressed vs ላልቶ / relaxed). For each meaning I wrote a short context sentence myself.
+I built 4 pairs. Each pair is **one spelling**, two meanings (gemination / ጠብቆ vs non-gemination / ላልቶ). For each meaning I wrote a short context sentence myself.
 
-| Same spelling | Stressed (ጠብቆ) meaning | Relaxed (ላልቶ) meaning |
-|---------------|--------------------------|-------------------------|
+| Same spelling | Gemination (stressed / ጠብቆ) | Non-gemination (relaxed / ላልቶ) |
+|---------------|------------------------------|--------------------------------|
 | ዋና | key / important | swim |
 | ሰፊ | wide | tailor's shop |
 | ገና | gena (Christmas game) | yet / still |
@@ -58,7 +61,7 @@ I built 4 pairs. Each pair is **one spelling**, two meanings (ጠብቆ / stress
 
 Steps:
 1. Generate TTS for all 8 sentences (first pass).
-2. Listen as a native speaker and label each clip as **stressed** or **relaxed**.
+2. Listen as a native speaker and label each clip as **stressed** (gemination) or **relaxed** (non-gemination).
 3. Regenerate each sentence **5 times** (40 clips) to check if the failure is stable or random. Each of the 5 clips per sentence is a **separate model generation** (a different audio file), not a copy of the same file. I did this so the result does not depend on a single run.
 4. Record my own human reference audio for all 8 sentences (so you can hear the contrast the model misses).
 
@@ -71,10 +74,10 @@ Full sentences and labels are in `results/`.
 **5× regeneration:** every sentence stayed the same across all 5 **separate** generations (40/40 stable). Still, in all 4 pairs, both sentences kept that same pronunciation (0/4 switched).
 
 What I heard:
-- ዋና and ሰፊ → always **stressed** (ጠብቆ), in both contexts and all repeats
-- ገና and አያት → always **relaxed** (ላልቶ), in both contexts and all repeats
+- ዋና and ሰፊ → always **gemination** (stressed / ጠብቆ), in both contexts and all repeats
+- ገና and አያት → always **non-gemination** (relaxed / ላልቶ), in both contexts and all repeats
 
-So in this pilot, the model did not use sentence meaning to choose ጠብቆ vs ላልቶ for these same-spelling pairs.
+So in this pilot, the model did not use sentence meaning to choose gemination vs non-gemination for these same-spelling pairs.
 
 ## Limits (this is a pilot)
 
@@ -99,12 +102,12 @@ So in this pilot, the model did not use sentence meaning to choose ጠብቆ vs 
 To fix this, we need training data that makes the choice explicit:
 - same spelling (identical text)
 - two meanings
-- two gold audios (ጠብቆ / stressed vs ላልቶ / relaxed)
+- two gold audios (gemination vs non-gemination)
 - clear context sentences for each
 
 Then fine-tune the TTS so it must pick the right spoken form from context — not one default for both sentences of a pair.
 
-A stronger option later: give the model an explicit control for this contrast (hold length / ጠብቆ).
+A stronger option later: give the model an explicit control for this contrast (hold length / gemination).
 
 ## What’s in this bucket
 
