@@ -1,0 +1,60 @@
+Model: Lab-et/omnivoice-amharic
+Task: 5x regeneration stability for same-spelling Amharic pairs
+Labels: stressed = held/taut reading; relaxed = lighter reading
+Note: spelling is identical within each pair (not different written words)
+
+wana_stressed_v1: stressed
+wana_stressed_v2: stressed
+wana_stressed_v3: stressed
+wana_stressed_v4: stressed
+wana_stressed_v5: stressed
+
+wana_relaxed_v1: stressed
+wana_relaxed_v2: stressed
+wana_relaxed_v3: stressed
+wana_relaxed_v4: stressed
+wana_relaxed_v5: stressed
+
+sefi_stressed_v1: stressed
+sefi_stressed_v2: stressed
+sefi_stressed_v3: stressed
+sefi_stressed_v4: stressed
+sefi_stressed_v5: stressed
+
+sefi_relaxed_v1: stressed
+sefi_relaxed_v2: stressed
+sefi_relaxed_v3: stressed
+sefi_relaxed_v4: stressed
+sefi_relaxed_v5: stressed
+
+gena_stressed_v1: relaxed
+gena_stressed_v2: relaxed
+gena_stressed_v3: relaxed
+gena_stressed_v4: relaxed
+gena_stressed_v5: relaxed
+
+gena_relaxed_v1: relaxed
+gena_relaxed_v2: relaxed
+gena_relaxed_v3: relaxed
+gena_relaxed_v4: relaxed
+gena_relaxed_v5: relaxed
+
+ayat_stressed_v1: relaxed
+ayat_stressed_v2: relaxed
+ayat_stressed_v3: relaxed
+ayat_stressed_v4: relaxed
+ayat_stressed_v5: relaxed
+
+ayat_relaxed_v1: relaxed
+ayat_relaxed_v2: relaxed
+ayat_relaxed_v3: relaxed
+ayat_relaxed_v4: relaxed
+ayat_relaxed_v5: relaxed
+
+SUMMARY
+total_clips: 40
+within_sentence_stable: 40/40
+pairs_switched_by_context: 0/4
+default_stressed: ዋና, ሰፊ
+default_relaxed: ገና, አያት
+conclusion: Regeneration is stable. Failure to switch stressed vs relaxed with context is consistent, not a one-off decode.

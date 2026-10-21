@@ -1,0 +1,18 @@
+Model: Lab-et/omnivoice-amharic (~0.6B)
+Blind spot: same Amharic spelling, two meanings — stressed vs relaxed pronunciation
+Note: not different spellings (e.g. አለ vs አለለ); the letters are identical
+
+Dataset: 4 pairs x 2 context sentences = 8 sentences
+Human refs: 8 recordings
+TTS first pass: 8 wavs
+TTS 5x stability: 40 wavs
+
+Results:
+- First pass switch success: 0/4
+- 5x within-sentence stability: 40/40
+- Context switch success after 5x: 0/4
+- Default stressed: ዋና, ሰፊ
+- Default relaxed: ገና, አያት
+
+Conclusion:
+The model consistently picks one pronunciation per spelling and does not switch stressed vs relaxed with sentence meaning.

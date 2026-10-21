@@ -1,0 +1,70 @@
+Model target: Lab-et/omnivoice-amharic
+Task: Amharic stressed vs relaxed contrast (identical spelling, different meaning)
+Note: This is NOT pairs with different letters (e.g. አለ vs አለለ).
+      Each pair below is the same written word; only speech changes.
+
+Summary:
+- 4/4 pairs failed to switch stressed/relaxed with sentence context
+- Model picks one default per spelling (sometimes stressed, sometimes relaxed)
+- Never produced the contrasting pronunciation across a pair
+
+========================================
+PAIR 1: ዋና
+========================================
+stressed_meaning: key / important
+stressed_sentence: የተናገርከው ዋና ሃሳብ ነው
+stressed_sentence_en: What you said is a key point.
+
+relaxed_meaning: swim
+relaxed_sentence: ከዋና መቼ ነው ምትመለሰው
+relaxed_sentence_en: When will you come back from swimming?
+
+TTS_result: both stressed (failed to switch)
+
+========================================
+PAIR 2: ሰፊ
+========================================
+stressed_meaning: wide
+stressed_sentence: ሜዳው በጣም ሰፊ ነው
+stressed_sentence_en: The field is very wide.
+
+relaxed_meaning: tailor's shop
+relaxed_sentence: ልብስ ሰፊ ቤት ሄጄ ነበር
+relaxed_sentence_en: I went to the tailor's shop.
+
+TTS_result: both stressed (failed to switch)
+
+========================================
+PAIR 3: ገና
+========================================
+stressed_meaning: gena (Christmas game)
+stressed_sentence: ልጅቹ ገና ጨዋታ ይጫወታሉ
+stressed_sentence_en: The children play the gena game.
+
+relaxed_meaning: yet / still
+relaxed_sentence: ልጁ ቤቱ ገና አልደረሰም
+relaxed_sentence_en: The boy hasn't reached home yet.
+
+TTS_result: both relaxed (failed to switch)
+
+========================================
+PAIR 4: አያት
+========================================
+stressed_meaning: grandparent
+stressed_sentence: የእኔ አያት በጣም አርጅተዋል
+stressed_sentence_en: My grandparent is very old.
+
+relaxed_meaning: looked / watched intently
+relaxed_sentence: አበበ አህቱን በትኩረት አያት
+relaxed_sentence_en: Abebe looked at his sister intently.
+
+TTS_result: both relaxed (failed to switch)
+
+========================================
+OVERALL
+========================================
+pairs_tested: 4
+pairs_switched_correctly: 0
+defaulted_stressed: ዋና, ሰፊ
+defaulted_relaxed: ገና, አያት
+conclusion: OmniVoice Amharic does not use sentence context to select stressed vs relaxed pronunciation for same-spelling Amharic words.
